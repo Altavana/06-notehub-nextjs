@@ -36,7 +36,17 @@ export const deleteNote = async (noteId: string): Promise<Note> => {
   const response = await api.delete<Note>(`/notes/${noteId}`);
   return response.data;
 };
-export const fetchNoteById = async (id: string): Promise<Note> => {
-  const response = await api.get<Note>(`/notes/[${id}]`);
+export async function fetchNoteById(id: string): Promise<Note> {
+  const response = await api.get<Note>(`/notes/${id}`);
   return response.data;
-};
+}
+
+export function formatDate(date: string) {
+  return new Date(date).toLocaleString('en-US', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+}

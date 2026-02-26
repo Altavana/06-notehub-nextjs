@@ -1,9 +1,9 @@
 import css from './NoteForm.module.css';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import type { FormikHelpers } from 'formik';
-import type { NewNote } from '../../services/noteService';
+import type { NewNote } from '@/lib/api';
 import * as Yup from 'yup';
-import { createNote } from '../../services/noteService';
+import { createNote } from '@/lib/api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 const initialValues: NewNote = {
@@ -40,11 +40,7 @@ export default function NoteForm({ onCancel }: NoteFormProps) {
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      validationSchema={NoteFormSchema}
-      onSubmit={handleSubmit}
-    >
+    <Formik initialValues={initialValues} validationSchema={NoteFormSchema} onSubmit={handleSubmit}>
       <Form className={css.form}>
         <div className={css.formGroup}>
           <label htmlFor="title">Title</label>
@@ -54,13 +50,7 @@ export default function NoteForm({ onCancel }: NoteFormProps) {
 
         <div className={css.formGroup}>
           <label htmlFor="content">Content</label>
-          <Field
-            as="textarea"
-            name="content"
-            id="content"
-            rows={8}
-            className={css.textarea}
-          />
+          <Field as="textarea" name="content" id="content" rows={8} className={css.textarea} />
           <ErrorMessage name="content" component="span" className={css.error} />
         </div>
 
@@ -80,11 +70,7 @@ export default function NoteForm({ onCancel }: NoteFormProps) {
           <button type="button" className={css.cancelButton} onClick={onCancel}>
             Cancel
           </button>
-          <button
-            type="submit"
-            className={css.submitButton}
-            disabled={mutation.isPending}
-          >
+          <button type="submit" className={css.submitButton} disabled={mutation.isPending}>
             Create note
           </button>
         </div>
